@@ -1,0 +1,14 @@
+.product-list{
+    /* -15px so it doesn't overflow the scrolling bar */
+    min-width: calc(100vw - 15px);
+    max-width: 100vw;
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: 0 1.8rem;
+    box-sizing: border-box;
+}
+
+.product-list p{
+    color: inherit;
+}

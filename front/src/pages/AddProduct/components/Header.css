@@ -1,0 +1,42 @@
+.add-product .header{
+    display: grid;
+    grid-template-columns: auto 1fr;
+    border-bottom: 2px solid black;
+}
+
+.add-product .title{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 0.4rem;
+}
+
+.add-product .title h1{
+    padding-bottom: 0.3rem;
+    margin-top: auto;
+}
+
+.add-product .title:hover{
+    cursor: default;
+}
+
+.add-product .items{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.add-product .items button {
+    background-color: white;
+    border: 2px solid black;
+    margin: 1rem;
+    padding: 0.4rem;
+    text-transform: uppercase;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.8);
+}
+
+.add-product .items button:hover {
+    cursor: pointer;
+    background-color: rgb(177, 177, 177);
+}

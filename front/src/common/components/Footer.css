@@ -1,0 +1,16 @@
+.footer {
+    height: 4rem;
+}
+
+.footer p {}
+
+.footer:hover {
+    cursor: default;
+}
+
+.footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: 2px solid black;
+}

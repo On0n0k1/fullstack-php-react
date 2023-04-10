@@ -1,0 +1,15 @@
+RewriteEngine on
+
+# Redirect requests to /api/v1/products to corresponding PHP files
+
+RewriteCond %{REQUEST_METHOD} =GET
+RewriteRule ^api/v1/products$ /api/read.php [NC,L,QSA]
+
+RewriteCond %{REQUEST_METHOD} =POST
+RewriteRule ^api/v1/products$ /api/create.php [NC,L]
+
+RewriteCond %{REQUEST_METHOD} =DELETE
+RewriteRule ^api/v1/products$ /api/delete.php [NC,L]
+
+# Redirect requests to / to index.html
+RewriteRule ^$ /index.html [NC,L]
