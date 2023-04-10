@@ -26,8 +26,8 @@ class Dao
         
         $this->dbHost = getenv('MYSQL_HOST');
         $this->dbPort = (int) getenv('MYSQL_PORT');
-        $this->dbUser = getenv('MYSQL_USER');
-        $this->dbPassword = getenv('MYSQL_PASSWORD');
+        $this->dbUser = getenv('MYSQL_ROOT_USER');
+        $this->dbPassword = getenv('MYSQL_ROOT_PASSWORD');
         $this->dbDatabase = getenv('MYSQL_DATABASE');
 
         $this->connection = new mysqli(
