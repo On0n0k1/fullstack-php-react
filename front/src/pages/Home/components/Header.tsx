@@ -21,11 +21,11 @@ const Header: FunctionComponent<HeaderProps> = (props: HeaderProps) => {
             </div>
             <nav>
                 <div className='items'>
-                    <button onClick={handleClick}>Add</button>
+                    <button onClick={handleClick}>ADD</button>
                     <button 
                         id="delete-product-btn"
                         onClick={handleDeleteClick}
-                    >Mass Delete</button>
+                    >MASS DELETE</button>
                 </div>
             </nav>
         </div>

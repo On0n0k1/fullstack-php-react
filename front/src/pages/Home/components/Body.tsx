@@ -1,4 +1,4 @@
-import { FunctionComponent, ChangeEvent } from 'react';
+import { FunctionComponent, useState, MutableRefObject } from 'react';
 import './Body.css';
 
 import ProductType from '../../../model/product';
@@ -65,30 +65,32 @@ const ProductContent: FunctionComponent<ProductContentProps> = (props: ProductCo
 }
 
 interface ProductProps {
-    index: number,
-    isChecked: boolean,
-    onCheckboxChange: (event: ChangeEvent<HTMLInputElement>, productSKU: string) => void,
+    checkedItems: MutableRefObject<{[key: string]: boolean}>,
     data: ProductType
 }
 
 const Product: FunctionComponent<ProductProps> = (props: ProductProps) => {
-    let index = props.index;
-    let id = `delete-checkbox-${index}`;
-    let isChecked = props.isChecked;
-    let onCheckboxChange = props.onCheckboxChange;
     let sku = props.data.sku;
+    
+    let id = `delete-checkbox-${sku}`;
+    let id_checkmark = `delete-checkmark-${sku}`;
+    let id_label = `delete-label-${sku}`;
+    let [isChecked, setIsChecked] = useState(props.checkedItems.current[sku]? true: false);
 
     return (
         <div className='product'>
-            <label className='delete-checkbox-label' htmlFor={id}>
+            <label className='delete-checkbox-label' htmlFor={id} id={id_label}>
                 <input 
                     className='delete-checkbox' 
                     id={id} 
                     type="checkbox" 
                     checked={ isChecked } 
-                    onChange={(event) => onCheckboxChange(event, sku)}
+                    onClick={(event) => {
+                        props.checkedItems.current = {...props.checkedItems.current, [sku]: !isChecked};
+                        setIsChecked(!isChecked);
+                    }}
                 />
-                <span className='delete-checkmark'></span>
+                <span className='delete-checkmark' id={id_checkmark}></span>
             </label>
             
             <ProductContent data={ props.data }/>
@@ -98,8 +100,7 @@ const Product: FunctionComponent<ProductProps> = (props: ProductProps) => {
 
 interface ProductsProps {
     products: ProductType[],
-    checkedItems: { [key: string]: boolean },
-    handleCheckboxChange: (event: ChangeEvent<HTMLInputElement>, productSKU: string) => void,
+    checkedItems: MutableRefObject<{[key: string]: boolean}>,
 }
 
 const Products: FunctionComponent<ProductsProps> = (props: ProductsProps) => {
@@ -107,11 +108,9 @@ const Products: FunctionComponent<ProductsProps> = (props: ProductsProps) => {
         <div className='products'>
             { props.products.map((element: ProductType, index: number)=> {
                 return (<Product 
-                    key={index} 
-                    index={index} 
+                    key={element.sku}
+                    checkedItems={props.checkedItems}
                     data={element}
-                    isChecked={props.checkedItems[element.sku]? true : false }
-                    onCheckboxChange={props.handleCheckboxChange}
                 />);
             }) }
         </div>
@@ -120,8 +119,7 @@ const Products: FunctionComponent<ProductsProps> = (props: ProductsProps) => {
 
 interface BodyProps {
     products: ProductType[],
-    checkedItems: { [key: string]: boolean },
-    handleCheckboxChange: (event: ChangeEvent<HTMLInputElement>, productSKU: string) => void
+    checkedItems: MutableRefObject<{[key: string]: boolean}>,
 }
 
 const Body: FunctionComponent<BodyProps> = (props: BodyProps) => {
@@ -130,7 +128,6 @@ const Body: FunctionComponent<BodyProps> = (props: BodyProps) => {
             <Products 
                 products={props.products} 
                 checkedItems={props.checkedItems}
-                handleCheckboxChange={props.handleCheckboxChange}
             />
         </div>
     );
