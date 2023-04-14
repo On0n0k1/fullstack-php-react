@@ -6,6 +6,10 @@ Source code for this website: https://lucas-lemos-assessment.000webhostapp.com
 
 Full-stack application with a front-end in React + vite, back-end in php 8.
 
+## Testing
+
+Tests for the deployed website can be found in `/fullstack-php-react-test`. Instructions are included in the `Readme.md` file.
+
 ## Requirements
 
 - PHP 8;
