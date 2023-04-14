@@ -1,4 +1,4 @@
-import { FunctionComponent, useState, MutableRefObject } from 'react';
+import { FunctionComponent } from 'react';
 import './Body.css';
 
 import ProductType from '../../../model/product';
@@ -65,30 +65,22 @@ const ProductContent: FunctionComponent<ProductContentProps> = (props: ProductCo
 }
 
 interface ProductProps {
-    checkedItems: MutableRefObject<{[key: string]: boolean}>,
     data: ProductType
 }
 
 const Product: FunctionComponent<ProductProps> = (props: ProductProps) => {
     let sku = props.data.sku;
     
-    let id = `delete-checkbox-${sku}`;
     let id_checkmark = `delete-checkmark-${sku}`;
     let id_label = `delete-label-${sku}`;
-    let [isChecked, setIsChecked] = useState(props.checkedItems.current[sku]? true: false);
 
     return (
         <div className='product'>
-            <label className='delete-checkbox-label' htmlFor={id} id={id_label}>
+            <label className='delete-checkbox-label' htmlFor={sku} id={id_label}>
                 <input 
                     className='delete-checkbox' 
-                    id={id} 
+                    id={sku} 
                     type="checkbox" 
-                    checked={ isChecked } 
-                    onClick={(event) => {
-                        props.checkedItems.current = {...props.checkedItems.current, [sku]: !isChecked};
-                        setIsChecked(!isChecked);
-                    }}
                 />
                 <span className='delete-checkmark' id={id_checkmark}></span>
             </label>
@@ -100,7 +92,6 @@ const Product: FunctionComponent<ProductProps> = (props: ProductProps) => {
 
 interface ProductsProps {
     products: ProductType[],
-    checkedItems: MutableRefObject<{[key: string]: boolean}>,
 }
 
 const Products: FunctionComponent<ProductsProps> = (props: ProductsProps) => {
@@ -109,7 +100,6 @@ const Products: FunctionComponent<ProductsProps> = (props: ProductsProps) => {
             { props.products.map((element: ProductType, index: number)=> {
                 return (<Product 
                     key={element.sku}
-                    checkedItems={props.checkedItems}
                     data={element}
                 />);
             }) }
@@ -119,7 +109,6 @@ const Products: FunctionComponent<ProductsProps> = (props: ProductsProps) => {
 
 interface BodyProps {
     products: ProductType[],
-    checkedItems: MutableRefObject<{[key: string]: boolean}>,
 }
 
 const Body: FunctionComponent<BodyProps> = (props: BodyProps) => {
@@ -127,7 +116,6 @@ const Body: FunctionComponent<BodyProps> = (props: BodyProps) => {
         <div className='body'>
             <Products 
                 products={props.products} 
-                checkedItems={props.checkedItems}
             />
         </div>
     );

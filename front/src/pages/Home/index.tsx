@@ -1,6 +1,4 @@
-import { FunctionComponent, useState, useEffect, useRef, ChangeEvent, MouseEvent } from 'react';
-// import { useNavigate } from 'react-router-dom';
-
+import { FunctionComponent, useState, useEffect } from 'react';
 
 import Header from './components/Header';
 import Body from './components/Body';
@@ -10,19 +8,17 @@ import './index.css';
 
 const Home: FunctionComponent = () => {
     const [products, setProducts] = useState([]);
-    const checkedItems = useRef<{[key: string]: boolean}>({});
 
     const handleDeleteClick = () => {
-        let items = [];
+        const checkboxes = document.querySelectorAll('.delete-checkbox');
+        let items: string[] = [];
 
-        for (let key in checkedItems.current){
-            if (checkedItems.current[key]){
-                items.push(key);
+        checkboxes.forEach((checkbox) => {
+            if ((checkbox as HTMLInputElement).checked){
+                items.push((checkbox as HTMLInputElement).id);
             }
-        }
+        });
 
-        checkedItems.current = {};
-        
         let message = {
             products: items
         };
@@ -60,10 +56,7 @@ const Home: FunctionComponent = () => {
     return (
         <div className='product-list'>
             <Header handleDeleteClick={handleDeleteClick} />
-            <Body 
-                products={products} 
-                checkedItems={checkedItems}
-            />
+            <Body products={products} />
             <Footer />
         </div>
     );
