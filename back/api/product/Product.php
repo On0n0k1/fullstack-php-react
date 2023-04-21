@@ -23,20 +23,16 @@ class Product implements JsonSerializable {
     }
 
     public static function createProduct(array $args) {
-        if (!isset($args["type"])) {
-            throw new InvalidArgumentException("Product type not specified");
-        }
+        $classMap = [
+            "DVD" => DVD::class,
+            "Furniture" => Furniture::class,
+            "Book" => Book::class
+        ];
 
-        switch ($args["type"]) {
-            case 'DVD': 
-                return new DVD($args);
-            case 'Book':
-                return new Book($args);
-            case 'Furniture':
-                return new Furniture($args);
-            default:
-                throw new InvalidArgumentException("Invalid Product Type");
-        }
+        $itemType = $args['type'];
+        $class = $classMap[$itemType] ?? throw new InvalidArgumentException("Product type not specified");
+
+        return new $class($args);
     }
 
     public function getSku(): string {
